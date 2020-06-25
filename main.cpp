@@ -42,32 +42,29 @@ int main(int argc, char *argv[])
         stop.push_back(temp);
         temp.clear();
     }
-    
+
     /*
     //Display the stops
     for (int i = 0; i < stop.size(); i++)
         cout << stop[i][0] << " " << stop[i][1] << endl;
     */
-    
+
     int i = 0;
-    while (i < stop.size() && count >= 0)
+    while (i < stop.size() && count >= stop[i][0])
     {
         //cout << count << endl; //display the number of passenger in the bus between 2 stops
-        if (count < stop[i][0])
-        {
-            cerr << "More passengers got off than those were in to stop " << i + 1 << "..." << endl;
-            return 0;
-        }
         count -= stop[i][0];
         count += stop[i][1];
         result = MAX(count, result);
         i++;
     }
 
-    if (count == 0)
+    if (i < stop.size() && count < stop[i][0])
+        cerr << "More passengers got off than those were in to stop " << i + 1 << "..." << endl;
+    else if (count == 0)
         cout << "The result is : " << result << endl;
     else
-        cerr << "There are still passengers left ! " << count << endl;
+        cerr << "There are still " << count << " passengers left !" << endl;
 
     return 0;
 }
